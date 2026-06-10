@@ -1,17 +1,11 @@
 /* =====================================================================
  * Bolão da Copa 2026
- * Site estático (GitHub Pages). Dados salvos como JSON no próprio
- * repositório, via GitHub Contents API com um token compartilhado.
+ * Site estático no Cloudflare Pages. Os dados são salvos como JSON no
+ * repositório do GitHub pelas funções em /functions/api/* — o token do
+ * GitHub fica só no servidor, ninguém precisa colar chave nenhuma.
  * ===================================================================== */
 
 /* ------------------------- CONFIGURAÇÃO ----------------------------- */
-// Edite aqui depois de criar o repositório no GitHub:
-const REPO = {
-  owner: "felipeLx",        // ex: "felipealves"
-  name: "bolao_wc2026",     // nome do repositório
-  branch: "main",
-};
-
 // Pontuação (regras do bolão)
 const POINTS = {
   exact: 10,   // acertou o placar exato
@@ -75,13 +69,10 @@ function teamLabel(name) {
 const S = {
   matches: [],
   pools: { pools: {} },
-  poolsSha: null,
   results: { results: {} },
-  resultsSha: null,
   config: { admins: [] },
   email: localStorage.getItem("bolao.email") || "",
   poolId: localStorage.getItem("bolao.pool") || "",
-  token: localStorage.getItem("bolao.token") || "",
   dirty: {},            // palpites alterados e não salvos {matchId: {h,a}}
   dirtyResults: {},     // resultados alterados (admin)
   tab: "palpites",
@@ -101,69 +92,17 @@ function started(match) {
   return Date.now() >= Date.parse(match.kickoff);
 }
 
-/* ------------------------- GITHUB API ------------------------------- */
-const API = `https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents`;
-
-function b64encodeUtf8(str) {
-  const bytes = new TextEncoder().encode(str);
-  let bin = "";
-  bytes.forEach((b) => (bin += String.fromCharCode(b)));
-  return btoa(bin);
-}
-function b64decodeUtf8(b64) {
-  const bin = atob(b64.replace(/\n/g, ""));
-  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
-async function ghGet(path) {
-  const r = await fetch(`${API}/${path}?ref=${REPO.branch}&t=${Date.now()}`, {
-    headers: { Authorization: `Bearer ${S.token}`, Accept: "application/vnd.github+json" },
-  });
-  if (r.status === 404) return { data: null, sha: null };
-  if (!r.ok) throw Object.assign(new Error(`GitHub GET ${path}: ${r.status}`), { status: r.status });
-  const j = await r.json();
-  return { data: JSON.parse(b64decodeUtf8(j.content)), sha: j.sha };
-}
-
-async function ghPut(path, data, sha, message) {
-  const body = {
-    message,
-    content: b64encodeUtf8(JSON.stringify(data, null, 1)),
-    branch: REPO.branch,
-  };
-  if (sha) body.sha = sha;
-  const r = await fetch(`${API}/${path}`, {
-    method: "PUT",
-    headers: { Authorization: `Bearer ${S.token}`, Accept: "application/vnd.github+json" },
+/* ------------------------- API DO SERVIDOR --------------------------- */
+// Toda gravação passa pelas funções em /api/* (Cloudflare Pages Functions).
+async function api(path, body) {
+  const r = await fetch("/api/" + path, body ? {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-  });
-  if (!r.ok) throw Object.assign(new Error(`GitHub PUT ${path}: ${r.status}`), { status: r.status });
-  return (await r.json()).content.sha;
-}
-
-// Salva com nova tentativa em caso de conflito (alguém salvou ao mesmo tempo).
-async function saveJson(path, mutator, message) {
-  let lastErr;
-  for (let i = 0; i < 4; i++) {
-    const { data, sha } = await ghGet(path);
-    const fresh = data || defaultFor(path);
-    mutator(fresh);
-    try {
-      const newSha = await ghPut(path, fresh, sha, message);
-      return { data: fresh, sha: newSha };
-    } catch (e) {
-      lastErr = e;
-      if (e.status !== 409 && e.status !== 422) throw e;
-    }
-  }
-  throw lastErr;
-}
-
-function defaultFor(path) {
-  if (path.endsWith("pools.json")) return { pools: {} };
-  if (path.endsWith("results.json")) return { results: {} };
-  return {};
+  } : undefined);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || `Erro ${r.status} no servidor`);
+  return j;
 }
 
 /* ------------------------- CARREGAMENTO ------------------------------ */
@@ -177,20 +116,17 @@ async function loadAll() {
   S.matches = (await fetchStatic("data/matches.json")).matches;
   try { S.config = await fetchStatic("data/config.json"); } catch { /* opcional */ }
 
-  if (S.token) {
-    // Com token: lê direto da API (sempre atualizado, sem esperar deploy do Pages)
-    try {
-      const p = await ghGet("data/pools.json");
-      if (p.data) { S.pools = p.data; S.poolsSha = p.sha; }
-      const r = await ghGet("data/results.json");
-      if (r.data) { S.results = r.data; S.resultsSha = r.sha; }
-      return;
-    } catch (e) {
-      console.warn("Leitura via API falhou, usando arquivos publicados", e);
-    }
+  try {
+    // Sempre fresco, direto do GitHub via servidor
+    const d = await api("data");
+    S.pools = d.pools;
+    S.results = d.results;
+  } catch (e) {
+    // Sem servidor (ex.: teste local com http.server): usa os arquivos publicados
+    console.warn("API indisponível, usando arquivos estáticos", e);
+    try { S.pools = await fetchStatic("data/pools.json"); } catch { /* primeiro uso */ }
+    try { S.results = await fetchStatic("data/results.json"); } catch { /* primeiro uso */ }
   }
-  try { S.pools = await fetchStatic("data/pools.json"); } catch { /* primeiro uso */ }
-  try { S.results = await fetchStatic("data/results.json"); } catch { /* primeiro uso */ }
 }
 
 /* ------------------------- PONTUAÇÃO -------------------------------- */
@@ -265,41 +201,24 @@ async function enterPool(ev) {
     if (!poolId) return (msgEl.textContent = "Nome de bolão inválido.");
   }
 
-  // Já é membro e nada novo a gravar? Entra direto, sem precisar de token.
-  const existing = S.pools.pools[poolId]?.members?.[email];
-  if (existing) {
+  // Já é membro? Entra direto, sem gravar nada.
+  if (S.pools.pools[poolId]?.members?.[email]) {
     setSession(email, poolId);
     return showMain();
   }
 
-  if (!(await ensureToken())) return;
   msgEl.textContent = "Salvando...";
   try {
-    const { data, sha } = await saveJson("data/pools.json", (pools) => {
-      if (creating && !pools.pools[poolId]) {
-        pools.pools[poolId] = {
-          name: $("#entry-newname").value.trim(),
-          createdBy: email,
-          createdAt: new Date().toISOString(),
-          members: {},
-        };
-      }
-      const pool = pools.pools[poolId];
-      if (!pool) throw new Error("Bolão não encontrado.");
-      if (!pool.members[email]) {
-        pool.members[email] = {
-          name,
-          acceptedRulesAt: new Date().toISOString(),
-          predictions: {},
-        };
-      }
-    }, `${name} entrou no bolão ${poolId}`);
-    S.pools = data;
-    S.poolsSha = sha;
-    setSession(email, poolId);
+    const resp = await api("join", {
+      poolId: creating ? "" : poolId,
+      newPoolName: creating ? $("#entry-newname").value.trim() : "",
+      email,
+      name,
+    });
+    S.pools = resp.pools;
+    setSession(email, resp.poolId);
     showMain();
   } catch (e) {
-    if (await recoverBadToken(e)) return enterPool(ev);
     msgEl.textContent = "Erro ao salvar: " + e.message;
   }
 }
@@ -316,70 +235,6 @@ function leavePool() {
   S.poolId = "";
   S.dirty = {};
   showEntry();
-}
-
-/* ------------------------- TOKEN ------------------------------------- */
-// Testa se o token consegue ESCREVER no repositório (permissions.push).
-async function testToken(t) {
-  const r = await fetch(`https://api.github.com/repos/${REPO.owner}/${REPO.name}?t=${Date.now()}`, {
-    headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json" },
-  });
-  if (!r.ok) return { ok: false, why: `token recusado (HTTP ${r.status})` };
-  const j = await r.json();
-  if (!j.permissions?.push) {
-    return {
-      ok: false,
-      why: "este token não tem permissão de escrita. Ao criar, escolha " +
-        `"Only select repositories" → ${REPO.owner}/${REPO.name} e ` +
-        '"Contents: Read and write" (a opção "Public repositories" é só leitura).',
-    };
-  }
-  return { ok: true };
-}
-
-function ensureToken() {
-  if (S.token) return Promise.resolve(true);
-  return new Promise((resolve) => {
-    $("#token-modal").hidden = false;
-    $("#token-input").value = "";
-    $("#token-msg").textContent = "";
-    $("#token-save").onclick = async () => {
-      const t = $("#token-input").value.trim();
-      if (!t) return;
-      $("#token-save").disabled = true;
-      $("#token-msg").textContent = "Testando a chave...";
-      const test = await testToken(t);
-      $("#token-save").disabled = false;
-      if (!test.ok) {
-        $("#token-msg").textContent = "Chave não funcionou: " + test.why;
-        return;
-      }
-      S.token = t;
-      localStorage.setItem("bolao.token", t);
-      $("#token-modal").hidden = true;
-      resolve(true);
-    };
-    $("#token-cancel").onclick = () => {
-      $("#token-modal").hidden = true;
-      resolve(false);
-    };
-  });
-}
-
-// Erro de autenticação no meio de um salvamento: descarta o token ruim
-// e abre o modal de novo. Retorna true se o usuário informou chave nova.
-async function recoverBadToken(e) {
-  if (![401, 403, 404].includes(e.status)) return false;
-  S.token = "";
-  localStorage.removeItem("bolao.token");
-  toast("Chave inválida ou expirada. Informe uma chave nova.", true);
-  return ensureToken();
-}
-
-function forgetToken() {
-  localStorage.removeItem("bolao.token");
-  S.token = "";
-  toast("Chave removida deste aparelho.");
 }
 
 /* ------------------------- TELA PRINCIPAL ---------------------------- */
@@ -494,34 +349,26 @@ function updateSaveBar() {
 }
 
 async function savePredictions() {
-  if (!(await ensureToken())) return;
   const btn = $("#save-btn");
   btn.disabled = true;
   btn.textContent = "Salvando...";
-  // Só grava palpites de jogos que ainda não começaram
+  // Filtro local de jogos já iniciados (o servidor valida de novo, com o relógio dele)
   const valid = {};
   for (const [id, p] of Object.entries(S.dirty)) {
     const match = S.matches.find((mm) => String(mm.id) === String(id));
     if (match && !started(match) && !match.placeholder) valid[id] = p;
   }
   try {
-    const { data, sha } = await saveJson("data/pools.json", (pools) => {
-      const member = pools.pools?.[S.poolId]?.members?.[S.email];
-      if (!member) throw new Error("Você não está mais neste bolão.");
-      member.predictions = member.predictions || {};
-      Object.assign(member.predictions, valid);
-    }, `Palpites de ${S.email} (${S.poolId})`);
-    S.pools = data;
-    S.poolsSha = sha;
+    const resp = await api("predictions", {
+      poolId: S.poolId,
+      email: S.email,
+      predictions: valid,
+    });
+    S.pools = resp.pools;
     S.dirty = {};
-    toast("Palpites salvos! ✅");
+    toast(`Palpites salvos! ✅ (${resp.saved} jogo${resp.saved > 1 ? "s" : ""})`);
     renderPalpites();
   } catch (e) {
-    if (await recoverBadToken(e)) {
-      btn.disabled = false;
-      btn.textContent = "Salvar palpites";
-      return savePredictions();
-    }
     toast("Erro ao salvar: " + e.message, true);
   } finally {
     btn.disabled = false;
@@ -635,25 +482,18 @@ function renderResultados() {
 }
 
 async function saveResults() {
-  if (!(await ensureToken())) return;
   const btn = $("#results-save");
   btn.disabled = true;
   try {
-    const updates = { ...S.dirtyResults };
-    const { data, sha } = await saveJson("data/results.json", (res) => {
-      res.results = res.results || {};
-      Object.assign(res.results, updates);
-    }, `Resultados lançados por ${S.email}`);
-    S.results = data;
-    S.resultsSha = sha;
+    const resp = await api("results", {
+      email: S.email,
+      results: { ...S.dirtyResults },
+    });
+    S.results = resp.results;
     S.dirtyResults = {};
     toast("Resultados salvos! ✅");
     renderResultados();
   } catch (e) {
-    if (await recoverBadToken(e)) {
-      btn.disabled = false;
-      return saveResults();
-    }
     toast("Erro ao salvar: " + e.message, true);
     btn.disabled = false;
   }
@@ -683,7 +523,6 @@ async function init() {
   $("#results-save").addEventListener("click", saveResults);
   $("#filter-all").addEventListener("change", renderPalpites);
   $("#btn-leave").addEventListener("click", leavePool);
-  $("#btn-forget-token").addEventListener("click", forgetToken);
   $("#btn-reload").addEventListener("click", async () => {
     toast("Atualizando...");
     await loadAll();
