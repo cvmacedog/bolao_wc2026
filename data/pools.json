@@ -8,7 +8,12 @@
     "felipealisboa@outlook.com": {
      "name": "Felipe Lisboa",
      "acceptedRulesAt": "2026-06-10T02:49:23.428Z",
-     "predictions": {}
+     "predictions": {
+      "1": {
+       "h": 2,
+       "a": 0
+      }
+     }
     }
    }
   }
