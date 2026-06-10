@@ -549,7 +549,20 @@
     "ibarra.paulo@gmail.com": {
      "name": "Lopa",
      "acceptedRulesAt": "2026-06-10T19:08:45.597Z",
-     "predictions": {}
+     "predictions": {
+      "1": {
+       "h": 3,
+       "a": 1
+      },
+      "2": {
+       "h": 1,
+       "a": 0
+      },
+      "3": {
+       "h": 1,
+       "a": 0
+      }
+     }
     }
    }
   }
