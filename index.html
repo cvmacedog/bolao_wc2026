@@ -84,10 +84,13 @@
   </div>
 
   <div id="tab-resultados" class="tab-panel" hidden>
-    <p class="muted">Lance o placar oficial de cada jogo já iniciado. Isso atualiza a pontuação de todos os bolões.</p>
+    <div class="save-area" style="margin-bottom:12px">
+      <button id="results-sync" class="primary">⚡ Buscar resultados da FIFA</button>
+      <p class="muted small">Puxa automaticamente os placares de jogos finalizados. Você também pode corrigir manualmente abaixo.</p>
+    </div>
     <div id="resultados-list"></div>
     <div class="save-area">
-      <button id="results-save" class="primary" disabled>Salvar resultados</button>
+      <button id="results-save" class="primary" disabled>Salvar resultados (manual)</button>
     </div>
   </div>
 </section>

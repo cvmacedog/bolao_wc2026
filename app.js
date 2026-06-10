@@ -499,6 +499,27 @@ async function saveResults() {
   }
 }
 
+async function syncResults() {
+  const btn = $("#results-sync");
+  btn.disabled = true;
+  btn.textContent = "Sincronizando...";
+  try {
+    const resp = await api("sync-results");
+    if (resp.updated > 0) {
+      await loadAll();
+      toast(`${resp.updated} resultado(s) atualizado(s) automaticamente ✅`);
+      renderResultados();
+    } else {
+      toast(resp.message || "Nenhum resultado novo.");
+    }
+  } catch (e) {
+    toast("Erro ao sincronizar: " + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "⚡ Buscar resultados da FIFA";
+  }
+}
+
 /* ------------------------- UTILITÁRIOS -------------------------------- */
 function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) =>
@@ -521,6 +542,7 @@ async function init() {
   $("#entry-pool").addEventListener("change", onEntryPoolChange);
   $("#save-btn").addEventListener("click", savePredictions);
   $("#results-save").addEventListener("click", saveResults);
+  $("#results-sync").addEventListener("click", syncResults);
   $("#filter-all").addEventListener("change", renderPalpites);
   $("#btn-leave").addEventListener("click", leavePool);
   $("#btn-reload").addEventListener("click", async () => {
