@@ -543,6 +543,14 @@ async function init() {
   } else {
     showEntry();
   }
+
+  setInterval(async () => {
+    if ($("#screen-main").hidden) return;
+    try {
+      await loadAll();
+      if (Object.keys(S.dirty).length === 0) setTab(S.tab);
+    } catch { /* silencioso */ }
+  }, 120_000);
 }
 
 document.addEventListener("DOMContentLoaded", init);
