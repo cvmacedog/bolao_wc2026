@@ -6,7 +6,7 @@ const GH = "https://api.github.com";
 
 export function repoCfg(env) {
   return {
-    owner: env.REPO_OWNER || "felipeLx",
+    owner: env.REPO_OWNER || "cvmacedog",
     name: env.REPO_NAME || "bolao_wc2026",
     branch: env.REPO_BRANCH || "main",
   };
