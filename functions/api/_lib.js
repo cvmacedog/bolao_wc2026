@@ -16,7 +16,7 @@ function ghHeaders(env) {
   return {
     Authorization: `Bearer ${env.GITHUB_TOKEN}`,
     Accept: "application/vnd.github+json",
-    "User-Agent": "bolao-copa-2026",
+    "User-Agent": "bolaogabinete",
     "Content-Type": "application/json",
   };
 }
