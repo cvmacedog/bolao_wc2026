@@ -13,8 +13,8 @@ const POINTS = {
   winner: 5,   // acertou apenas o vencedor (ou empate)
 };
 
-const ENTRY_FEE = "R$ 100,00";
-const FEE_DEADLINE = "uma semana antes da final (até 12/07/2026)";
+const ENTRY_FEE = "R$ 0,00";
+const FEE_DEADLINE = "";
 
 /* ------------------------- TIMES E FASES ----------------------------- */
 const TEAMS = {
