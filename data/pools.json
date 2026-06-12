@@ -1147,6 +1147,18 @@
      "predictions": {}
     }
    }
+  },
+  "bolao-do-gabinete": {
+   "name": "Bolão do Gabinete",
+   "createdBy": "cvmacedog@gmail.com",
+   "createdAt": "2026-06-12T07:02:47.461Z",
+   "members": {
+    "cvmacedog@gmail.com": {
+     "name": "Caio",
+     "acceptedRulesAt": "2026-06-12T07:02:47.461Z",
+     "predictions": {}
+    }
+   }
   }
  }
 }
