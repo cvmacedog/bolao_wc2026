@@ -46,17 +46,6 @@
    "placeholder": false
   },
   {
-   "id": 6,
-   "stage": "Group Stage",
-   "group": "D",
-   "home": "Australia",
-   "away": "Türkiye",
-   "kickoff": "2026-06-14T04:00:00Z",
-   "venue": "BC Place",
-   "city": "Vancouver",
-   "placeholder": false
-  },
-  {
    "id": 8,
    "stage": "Group Stage",
    "group": "B",
@@ -87,6 +76,17 @@
    "kickoff": "2026-06-14T01:00:00Z",
    "venue": "Gillette Stadium",
    "city": "Boston",
+   "placeholder": false
+  },
+  {
+   "id": 6,
+   "stage": "Group Stage",
+   "group": "D",
+   "home": "Australia",
+   "away": "Türkiye",
+   "kickoff": "2026-06-14T04:00:00Z",
+   "venue": "BC Place",
+   "city": "Vancouver",
    "placeholder": false
   },
   {
