@@ -1,6 +1,6 @@
 // Configuração do Worker (Cloudflare) — deploy: npx wrangler deploy
 {
-  "name": "bolao2026",
+  "name": "bolaogabinete",
   "main": "src/worker.js",
   "compatibility_date": "2026-06-01",
   "assets": {
