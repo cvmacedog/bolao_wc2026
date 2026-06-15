@@ -178,17 +178,6 @@
    "placeholder": false
   },
   {
-   "id": 20,
-   "stage": "Group Stage",
-   "group": "J",
-   "home": "Austria",
-   "away": "Jordan",
-   "kickoff": "2026-06-17T04:00:00Z",
-   "venue": "Levi's Stadium",
-   "city": "San Francisco Bay Area",
-   "placeholder": false
-  },
-  {
    "id": 17,
    "stage": "Group Stage",
    "group": "I",
@@ -208,6 +197,17 @@
    "kickoff": "2026-06-16T22:00:00Z",
    "venue": "Gillette Stadium",
    "city": "Boston",
+   "placeholder": false
+  },
+  {
+   "id": 20,
+   "stage": "Group Stage",
+   "group": "J",
+   "home": "Austria",
+   "away": "Jordan",
+   "kickoff": "2026-06-17T04:00:00Z",
+   "venue": "Levi's Stadium",
+   "city": "San Francisco Bay Area",
    "placeholder": false
   },
   {
@@ -354,17 +354,6 @@
    "placeholder": false
   },
   {
-   "id": 36,
-   "stage": "Group Stage",
-   "group": "F",
-   "home": "Tunisia",
-   "away": "Japan",
-   "kickoff": "2026-06-21T04:00:00Z",
-   "venue": "Estadio BBVA",
-   "city": "Monterrey",
-   "placeholder": false
-  },
-  {
    "id": 35,
    "stage": "Group Stage",
    "group": "F",
@@ -384,6 +373,17 @@
    "kickoff": "2026-06-20T20:00:00Z",
    "venue": "BMO Field",
    "city": "Toronto",
+   "placeholder": false
+  },
+  {
+   "id": 36,
+   "stage": "Group Stage",
+   "group": "F",
+   "home": "Tunisia",
+   "away": "Japan",
+   "kickoff": "2026-06-21T04:00:00Z",
+   "venue": "Estadio BBVA",
+   "city": "Monterrey",
    "placeholder": false
   },
   {
