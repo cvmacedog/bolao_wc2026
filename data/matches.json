@@ -183,7 +183,7 @@
    "group": "J",
    "home": "Austria",
    "away": "Jordan",
-   "kickoff": "2026-06-16T04:00:00Z",
+   "kickoff": "2026-06-17T04:00:00Z",
    "venue": "Levi's Stadium",
    "city": "San Francisco Bay Area",
    "placeholder": false
@@ -337,7 +337,7 @@
    "group": "C",
    "home": "Brazil",
    "away": "Haiti",
-   "kickoff": "2026-06-20T01:00:00Z",
+   "kickoff": "2026-06-20T00:30:00Z",
    "venue": "Lincoln Financial Field",
    "city": "Philadelphia",
    "placeholder": false
@@ -359,7 +359,7 @@
    "group": "F",
    "home": "Tunisia",
    "away": "Japan",
-   "kickoff": "2026-06-20T04:00:00Z",
+   "kickoff": "2026-06-21T04:00:00Z",
    "venue": "Estadio BBVA",
    "city": "Monterrey",
    "placeholder": false
