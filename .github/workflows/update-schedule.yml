@@ -3,7 +3,7 @@ name: Update World Cup 2026 Schedule
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'  # Runs daily at midnight UTC
+    - cron: '0 0 * * *'
 
 jobs:
   update-schedule:
@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
         
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -30,26 +28,21 @@ jobs:
         
       - name: Convert schedule
         run: python tools/convert_schedule.py
-      
-      - name: Debug git status before changes
-        run: |
-          git remote -v
-          git status
-          git log --oneline -5
-      
-      - name: Reset to remote and commit
+        
+      - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          echo "=== Fetching origin main ==="
-          git fetch origin main
-          echo "=== Fetch complete ==="
-          git log --oneline -5
-          echo "=== Resetting to origin/main ==="
-          git reset --hard origin/main
-          echo "=== Adding changes ==="
           git add data/
-          echo "=== Committing ==="
           git commit -m "mata-mata definido" || exit 0
-          echo "=== Pushing ==="
-          git push -v origin main
+          for i in {1..5}; do
+            if git push origin main; then
+              echo "Push successful"
+              exit 0
+            fi
+            echo "Push attempt $i failed, retrying..."
+            git pull --rebase origin main
+            sleep 2
+          done
+          echo "Push failed after 5 attempts"
+          exit 1
