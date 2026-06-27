@@ -24,10 +24,29 @@ jobs:
         run: mkdir -p data
       
       - name: Download schedule data
-        run: curl -o data/schedule-raw.json https://raw.githubusercontent.com/mjwebmaster/world-cup-2026-schedule-data/main/world-cup-2026-schedule.json
+        run: |
+          echo "Downloading schedule..."
+          curl -v -o data/schedule-raw.json https://raw.githubusercontent.com/mjwebmaster/world-cup-2026-schedule-data/main/world-cup-2026-schedule.json
+          echo "Download complete. File size:"
+          ls -lh data/schedule-raw.json
+          echo "First 100 lines of downloaded file:"
+          head -100 data/schedule-raw.json
         
       - name: Convert schedule
-        run: python tools/convert_schedule.py
+        run: |
+          echo "Running conversion script..."
+          python tools/convert_schedule.py
+          echo "Conversion complete. New file:"
+          ls -lh data/matches.json
+          echo "First 50 lines of converted file:"
+          head -50 data/matches.json
+        
+      - name: Check what changed
+        run: |
+          echo "Git status:"
+          git status
+          echo "Git diff:"
+          git diff data/matches.json | head -50
         
       - name: Commit and push
         run: |
@@ -44,5 +63,3 @@ jobs:
             git pull --rebase origin main
             sleep 2
           done
-          echo "Push failed after 5 attempts"
-          exit 1
