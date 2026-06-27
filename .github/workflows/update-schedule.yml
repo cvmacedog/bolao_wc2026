@@ -30,13 +30,26 @@ jobs:
         
       - name: Convert schedule
         run: python tools/convert_schedule.py
-        
+      
+      - name: Debug git status before changes
+        run: |
+          git remote -v
+          git status
+          git log --oneline -5
+      
       - name: Reset to remote and commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          echo "=== Fetching origin main ==="
           git fetch origin main
+          echo "=== Fetch complete ==="
+          git log --oneline -5
+          echo "=== Resetting to origin/main ==="
           git reset --hard origin/main
+          echo "=== Adding changes ==="
           git add data/
+          echo "=== Committing ==="
           git commit -m "mata-mata definido" || exit 0
-          git push origin main
+          echo "=== Pushing ==="
+          git push -v origin main
