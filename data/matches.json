@@ -896,7 +896,7 @@
    "id": 81,
    "stage": "Round of 32",
    "group": null,
-   "home": "USA",
+   "home": "United States",
    "away": "Bosnia and Herzegovina",
    "kickoff": "2026-07-02T00:00:00Z",
    "venue": "Levi's Stadium",
@@ -978,7 +978,7 @@
    "kickoff": "2026-07-04T17:00:00Z",
    "venue": "NRG Stadium",
    "city": "Houston",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 89,
