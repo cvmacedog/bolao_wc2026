@@ -797,177 +797,177 @@
    "id": 73,
    "stage": "Round of 32",
    "group": null,
-   "home": "South Africa",
-   "away": "Canada",
+   "home": "Group A Runner-up",
+   "away": "Group B Runner-up",
    "kickoff": "2026-06-28T19:00:00Z",
    "venue": "SoFi Stadium",
    "city": "Los Angeles",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 76,
    "stage": "Round of 32",
    "group": null,
-   "home": "Brazil",
-   "away": "Japan",
+   "home": "Group C Winner",
+   "away": "Group F Runner-up",
    "kickoff": "2026-06-29T17:00:00Z",
    "venue": "NRG Stadium",
    "city": "Houston",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 74,
    "stage": "Round of 32",
    "group": null,
-   "home": "Germany",
-   "away": "Paraguay",
+   "home": "Group E Winner",
+   "away": "Group A/B/C/D/F 3rd Place",
    "kickoff": "2026-06-29T20:30:00Z",
    "venue": "Gillette Stadium",
    "city": "Boston",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 75,
    "stage": "Round of 32",
    "group": null,
-   "home": "Netherlands",
-   "away": "Morocco",
+   "home": "Group F Winner",
+   "away": "Group C Runner-up",
    "kickoff": "2026-06-30T01:00:00Z",
    "venue": "Estadio BBVA",
    "city": "Monterrey",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 78,
    "stage": "Round of 32",
    "group": null,
-   "home": "Côte d’Ivoire",
-   "away": "Norway",
+   "home": "Group E Runner-up",
+   "away": "Group I Runner-up",
    "kickoff": "2026-06-30T17:00:00Z",
    "venue": "AT&T Stadium",
    "city": "Dallas",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 77,
    "stage": "Round of 32",
    "group": null,
-   "home": "France",
-   "away": "Sweden",
+   "home": "Group I Winner",
+   "away": "Group C/D/F/G/H 3rd Place",
    "kickoff": "2026-06-30T21:00:00Z",
    "venue": "MetLife Stadium",
    "city": "New York/New Jersey",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 79,
    "stage": "Round of 32",
    "group": null,
-   "home": "Mexico",
-   "away": "Ecuador",
+   "home": "Group A Winner",
+   "away": "Group C/E/F/H/I 3rd Place",
    "kickoff": "2026-07-01T01:00:00Z",
    "venue": "Estadio Azteca",
    "city": "Mexico City",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 80,
    "stage": "Round of 32",
    "group": null,
-   "home": "England",
-   "away": "Congo DR",
+   "home": "Group L Winner",
+   "away": "Group E/H/I/J/K 3rd Place",
    "kickoff": "2026-07-01T16:00:00Z",
    "venue": "Mercedes-Benz Stadium",
    "city": "Atlanta",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 82,
    "stage": "Round of 32",
    "group": null,
-   "home": "Belgium",
-   "away": "Senegal",
+   "home": "Group G Winner",
+   "away": "Group A/E/H/I/J 3rd Place",
    "kickoff": "2026-07-01T20:00:00Z",
    "venue": "Lumen Field",
    "city": "Seattle",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 81,
    "stage": "Round of 32",
    "group": null,
-   "home": "United States",
-   "away": "Bosnia and Herzegovina",
+   "home": "Group D Winner",
+   "away": "Group B/E/F/I/J 3rd Place",
    "kickoff": "2026-07-02T00:00:00Z",
    "venue": "Levi's Stadium",
    "city": "San Francisco Bay Area",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 84,
    "stage": "Round of 32",
    "group": null,
-   "home": "Spain",
-   "away": "Austria",
+   "home": "Group H Winner",
+   "away": "Group J Runner-up",
    "kickoff": "2026-07-02T19:00:00Z",
    "venue": "SoFi Stadium",
    "city": "Los Angeles",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 83,
    "stage": "Round of 32",
    "group": null,
-   "home": "Portugal",
-   "away": "Croatia",
+   "home": "Group K Runner-up",
+   "away": "Group L Runner-up",
    "kickoff": "2026-07-02T23:00:00Z",
    "venue": "BMO Field",
    "city": "Toronto",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 85,
    "stage": "Round of 32",
    "group": null,
-   "home": "Switzerland",
-   "away": "Algeria",
+   "home": "Group B Winner",
+   "away": "Group E/F/G/I/J 3rd Place",
    "kickoff": "2026-07-03T03:00:00Z",
    "venue": "BC Place",
    "city": "Vancouver",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 88,
    "stage": "Round of 32",
    "group": null,
-   "home": "Australia",
-   "away": "Egypt",
+   "home": "Group D Runner-up",
+   "away": "Group G Runner-up",
    "kickoff": "2026-07-03T18:00:00Z",
    "venue": "AT&T Stadium",
    "city": "Dallas",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 86,
    "stage": "Round of 32",
    "group": null,
-   "home": "Argentina",
-   "away": "Cabo Verde",
+   "home": "Group J Winner",
+   "away": "Group H Runner-up",
    "kickoff": "2026-07-03T22:00:00Z",
    "venue": "Hard Rock Stadium",
    "city": "Miami",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 87,
    "stage": "Round of 32",
    "group": null,
-   "home": "Colombia",
-   "away": "Ghana",
+   "home": "Group K Winner",
+   "away": "Group D/E/I/J/L 3rd Place",
    "kickoff": "2026-07-04T01:30:00Z",
    "venue": "Arrowhead Stadium",
    "city": "Kansas City",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 90,
