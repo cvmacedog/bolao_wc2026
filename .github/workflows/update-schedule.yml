@@ -2,8 +2,6 @@ name: Update World Cup 2026 Schedule
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   update-schedule:
