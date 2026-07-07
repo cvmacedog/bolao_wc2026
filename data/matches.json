@@ -1061,45 +1061,45 @@
    "id": 97,
    "stage": "Quarter-finals",
    "group": null,
-   "home": "Match 89 Winner",
-   "away": "Match 90 Winner",
+   "home": "France",
+   "away": "Morocco",
    "kickoff": "2026-07-09T20:00:00Z",
    "venue": "Gillette Stadium",
    "city": "Boston",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 98,
    "stage": "Quarter-finals",
    "group": null,
-   "home": "Match 93 Winner",
-   "away": "Match 94 Winner",
+   "home": "Spain",
+   "away": "Belgium",
    "kickoff": "2026-07-10T19:00:00Z",
    "venue": "SoFi Stadium",
    "city": "Los Angeles",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 99,
    "stage": "Quarter-finals",
    "group": null,
-   "home": "Match 91 Winner",
-   "away": "Match 92 Winner",
+   "home": "Norway",
+   "away": "England",
    "kickoff": "2026-07-11T21:00:00Z",
    "venue": "Hard Rock Stadium",
    "city": "Miami",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 100,
    "stage": "Quarter-finals",
    "group": null,
-   "home": "Match 95 Winner",
-   "away": "Match 96 Winner",
+   "home": "Argentina",
+   "away": "Switzerland",
    "kickoff": "2026-07-12T01:00:00Z",
    "venue": "Arrowhead Stadium",
    "city": "Kansas City",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 101,
