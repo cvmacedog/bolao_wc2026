@@ -1105,23 +1105,23 @@
    "id": 101,
    "stage": "Semi-finals",
    "group": null,
-   "home": "Match 97 Winner",
-   "away": "Match 98 Winner",
+   "home": "France",
+   "away": "Spain",
    "kickoff": "2026-07-14T19:00:00Z",
    "venue": "AT&T Stadium",
    "city": "Dallas",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 102,
    "stage": "Semi-finals",
    "group": null,
-   "home": "Match 99 Winner",
-   "away": "Match 100 Winner",
+   "home": "England",
+   "away": "Agentina",
    "kickoff": "2026-07-15T19:00:00Z",
    "venue": "Mercedes-Benz Stadium",
    "city": "Atlanta",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 103,
@@ -1132,7 +1132,7 @@
    "kickoff": "2026-07-18T21:00:00Z",
    "venue": "Hard Rock Stadium",
    "city": "Miami",
-   "placeholder": true
+   "placeholder": false
   },
   {
    "id": 104,
@@ -1143,7 +1143,7 @@
    "kickoff": "2026-07-19T19:00:00Z",
    "venue": "MetLife Stadium",
    "city": "New York/New Jersey",
-   "placeholder": true
+   "placeholder": false
   }
  ]
 }
