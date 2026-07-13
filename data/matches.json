@@ -1117,7 +1117,7 @@
    "stage": "Semi-finals",
    "group": null,
    "home": "England",
-   "away": "Agentina",
+   "away": "Argentina",
    "kickoff": "2026-07-15T19:00:00Z",
    "venue": "Mercedes-Benz Stadium",
    "city": "Atlanta",
@@ -1132,7 +1132,7 @@
    "kickoff": "2026-07-18T21:00:00Z",
    "venue": "Hard Rock Stadium",
    "city": "Miami",
-   "placeholder": false
+   "placeholder": true
   },
   {
    "id": 104,
@@ -1143,7 +1143,7 @@
    "kickoff": "2026-07-19T19:00:00Z",
    "venue": "MetLife Stadium",
    "city": "New York/New Jersey",
-   "placeholder": false
+   "placeholder": true
   }
  ]
 }
